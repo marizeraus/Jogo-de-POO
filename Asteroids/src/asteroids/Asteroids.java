@@ -1,7 +1,5 @@
 
 package asteroids;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 /**
@@ -14,8 +12,28 @@ public class Asteroids extends StateBasedGame{
     public static final int menu = 0;
     public static final int play = 1;
     
+    public Asteroids(String gamename){
+        super(gamename);
+        this.addState(new Menu(menu));
+        this.addState(new Play(play));
+    }
+    
+    public void initStatesList(GameContainer gc) throws SlickException{
+        this.getState(menu).init(gc, this);
+        this.getState(menu).init(gc, this);
+        this.enterState(menu);
+    }
+    
     public static void main(String[] args) {
         // TODO code application logic here
+        AppGameContainer appgc;
+        try {
+            appgc = new AppGameContainer(new Asteroids(gamename));
+            appgc.setDisplayMode(640, 360, false);
+            appgc.start();
+        } catch (SlickException e){
+            e.printStackTrace();
+        }
     }
     
 }
