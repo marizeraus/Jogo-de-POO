@@ -12,18 +12,23 @@ public class Play extends BasicGameState{
         
     }
     
+    @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException{
         
     }
     
+    @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
+        g.drawRect(0, 0, 100, 100); // x, y, width, height
         
     }
     
+    @Override
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
         
     }
     
+    @Override
     public int getID(){
         return 1;
     }
