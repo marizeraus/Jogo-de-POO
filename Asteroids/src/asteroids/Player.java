@@ -15,8 +15,10 @@ public class Player {
     float shiftX;
     float shiftY;
     float angle;
+    float speed;
     
     public void init(GameContainer gc) throws SlickException {
+        speed = .1f;
         player = new Image("Art/player.png");
         shiftX = playerPosX+((gc.getWidth()/2)-(player.getWidth()/2));
         shiftY = playerPosY+((gc.getHeight()/2)-(player.getHeight()/2));
@@ -49,7 +51,8 @@ public class Player {
     }
     
     private void moveUp(int delta){
-        playerPosY -= delta * .1f;
+        playerPosX -= (float) Math.cos(Math.toRadians(angle+90))*delta*speed;
+        playerPosY -= (float) Math.sin(Math.toRadians(angle+90))*delta*speed;
     }
     
     private void moveDown(int delta){
