@@ -14,6 +14,7 @@ public class Player {
     float playerPosY = 0;
     float shiftX;
     float shiftY;
+    float angle;
     
     public void init(GameContainer gc) throws SlickException {
         player = new Image("Art/player.png");
@@ -26,7 +27,40 @@ public class Player {
     }
     
     public void render(GameContainer gc, Graphics g) throws SlickException {
+        player.setRotation(angle);
         player.draw(shiftX, shiftY, 1);
+        g.drawString(""+shiftX+" "+shiftY, shiftX, shiftY);
     }
     
+    public void move(GameContainer gc,int delta){
+        Input keyboard = gc.getInput();
+        if(keyboard.isKeyDown(Input.KEY_DOWN)){
+            moveDown(delta);
+        }
+        if(keyboard.isKeyDown(Input.KEY_UP)){
+            moveUp(delta);
+        }
+        if(keyboard.isKeyDown(Input.KEY_LEFT)){
+            rotateLeft(delta);
+        }
+        if(keyboard.isKeyDown(Input.KEY_RIGHT)){
+            rotateRight(delta);
+        }
+    }
+    
+    private void moveUp(int delta){
+        playerPosY -= delta * .1f;
+    }
+    
+    private void moveDown(int delta){
+        playerPosY += delta * .1f;
+    }
+    
+    private void rotateLeft(int delta){
+        angle -= delta * .1f;
+    }
+    
+    private void rotateRight(int delta){
+        angle += delta * .1f;
+    }
 }

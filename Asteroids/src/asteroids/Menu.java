@@ -60,6 +60,7 @@ public class Menu extends BasicGameState{
             corStart = Color.yellow;
             corExit = Color.orange;
         }
+        
     }
     
     @Override

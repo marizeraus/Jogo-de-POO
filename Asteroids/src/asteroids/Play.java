@@ -8,8 +8,7 @@ import asteroids.Player;
  * @author jmsgfhr,(add o nome de vcs)
  */
 public class Play extends BasicGameState{
-    
-    public Player player;
+    public Player player1;
     
     public Play(int state){
         
@@ -17,20 +16,19 @@ public class Play extends BasicGameState{
     
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException{
-        
+        player1 = new Player();
     }
     
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
-        g.drawRect(0, 0, 100, 100); // x, y, width, height
-        player = new Player();
-        player.init(gc);
-        player.render(gc, g);
+        //g.drawRect(0, 0, 100, 100);  x, y, width, height
+        player1.init(gc);
+        player1.render(gc, g);
     }
     
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
-        
+        player1.move(gc, delta);
     }
     
     @Override
