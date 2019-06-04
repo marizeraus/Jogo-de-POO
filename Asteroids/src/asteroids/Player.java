@@ -1,5 +1,6 @@
 
 package asteroids;
+import java.util.ArrayList;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -7,17 +8,20 @@ import org.newdawn.slick.state.StateBasedGame;
  *
  * @author jmsgfhr
  */
-public class Player {
+public class Player extends Play{
+    private Image player = null;
+    private float playerPosX = 0;
+    private float playerPosY = 0;
+    private float shiftX;
+    private float shiftY;
+    private float angle;
+    private float speed;
+
+    public Player(int state) {
+        super(state);
+    }
     
-    Image player = null;
-    float playerPosX = 0;
-    float playerPosY = 0;
-    float shiftX;
-    float shiftY;
-    float angle;
-    float speed;
-    
-    public void init(GameContainer gc) throws SlickException {
+    public void init(GameContainer gc) throws SlickException{
         speed = .1f;
         player = new Image("Art/player.png");
         shiftX = playerPosX+((gc.getWidth()/2)-(player.getWidth()/2));
@@ -25,20 +29,28 @@ public class Player {
     }
     
     public void update(GameContainer gc, int delta) throws SlickException {
-        
     }
     
     public void render(GameContainer gc, Graphics g) throws SlickException {
+        if(playerPosX>470){
+            playerPosX=-470;
+        }
+        if(playerPosY>330){
+            playerPosY=-330;
+        }
+        if(playerPosX<-470){
+            playerPosX=470;
+        }
+        if(playerPosY<-330){
+            playerPosY=330;
+        }
         player.setRotation(angle);
         player.draw(shiftX, shiftY, 1);
-        g.drawString(""+shiftX+" "+shiftY, shiftX, shiftY);
+        g.drawString(""+playerPosX+" "+playerPosY, shiftX, shiftY);
     }
     
-    public void move(GameContainer gc,int delta){
+    public void commands(GameContainer gc,int delta){
         Input keyboard = gc.getInput();
-        if(keyboard.isKeyDown(Input.KEY_DOWN)){
-            moveDown(delta);
-        }
         if(keyboard.isKeyDown(Input.KEY_UP)){
             moveUp(delta);
         }
@@ -48,15 +60,18 @@ public class Player {
         if(keyboard.isKeyDown(Input.KEY_RIGHT)){
             rotateRight(delta);
         }
+        if(keyboard.isKeyDown(Input.KEY_SPACE)){
+            atira(delta);
+        }
+    }
+    
+    private void atira(int delta){
+        this.criaTiro();
     }
     
     private void moveUp(int delta){
         playerPosX -= (float) Math.cos(Math.toRadians(angle+90))*delta*speed;
         playerPosY -= (float) Math.sin(Math.toRadians(angle+90))*delta*speed;
-    }
-    
-    private void moveDown(int delta){
-        playerPosY += delta * .1f;
     }
     
     private void rotateLeft(int delta){
@@ -65,5 +80,22 @@ public class Player {
     
     private void rotateRight(int delta){
         angle += delta * .1f;
+    }
+    
+    /*public void moveAtrito(int delta){
+        playerPosX -= (float) Math.cos(Math.toRadians(angle+90))*delta*speed;
+        playerPosY -= (float) Math.sin(Math.toRadians(angle+90))*delta*speed;
+    }*/
+    
+    public float getPlayerPosX(){
+        return playerPosX;
+    }
+    
+    public float getPlayerPosY(){
+        return playerPosY;
+    }
+    
+    public float getAngle(){
+        return angle;
     }
 }
