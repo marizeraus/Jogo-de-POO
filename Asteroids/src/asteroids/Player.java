@@ -60,13 +60,7 @@ public class Player extends Play{
         if(keyboard.isKeyDown(Input.KEY_RIGHT)){
             rotateRight(delta);
         }
-        if(keyboard.isKeyDown(Input.KEY_SPACE)){
-            atira(delta);
-        }
-    }
-    
-    private void atira(int delta){
-        this.criaTiro();
+        
     }
     
     private void moveUp(int delta){
@@ -88,11 +82,11 @@ public class Player extends Play{
     }*/
     
     public float getPlayerPosX(){
-        return playerPosX;
+        return shiftX+player.getWidth()/2; // centro da nave
     }
     
     public float getPlayerPosY(){
-        return playerPosY;
+        return shiftY+player.getHeight()/2; // centro da nave
     }
     
     public float getAngle(){

@@ -8,37 +8,56 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class Shot extends Player{
     
-    Image shot = null;
-    float shotPosX = 0;
-    float shotPosY = 0;
-    float shiftShotX;
-    float shiftShotY;
+    private Image shot = null;
+    private float shotPosX = 0;
+    private float shotPosY = 0;
+    private float shiftShotX;
+    private float shiftShotY;
+    private float angle;
+    private float playerPosx;
+    private float playerPosy;
+    private float time=20;
 
-    public Shot(int state) {
+    public Shot(int state, GameContainer gc, float posx, float posy, float angle) {
         super(state);
+        this.angle = angle;
+        this.playerPosx=posx;
+        this.playerPosy=posy;
     }
     
-    
-    
     @Override
-    public void init(GameContainer gc) throws SlickException{
-        shot = new Image("Art/beam.png");
-        shiftShotX = this.getPlayerPosX()+((gc.getWidth()/2)-(shot.getWidth()/2));
-        shiftShotY = this.getPlayerPosY()+((gc.getHeight()/2)-(shot.getHeight()/2));
+    public void init(GameContainer gc){
+        
     }
     
     @Override
     public void update(GameContainer gc, int delta) throws SlickException {
-        while(true){
-            shotPosX -= (float) Math.cos(Math.toRadians(this.getAngle()+90))*delta*.2f;
-            shotPosY -= (float) Math.sin(Math.toRadians(this.getAngle()+90))*delta*.2f;
+        shiftShotX = shotPosX+playerPosx;
+        shiftShotY = shotPosY+playerPosy;
+        shotPosX -= (float) Math.cos(Math.toRadians(angle+90))*delta*.5f;
+        shotPosY -= (float) Math.sin(Math.toRadians(angle+90))*delta*.5f;
+        time-= 0.2;
+        if(playerPosx+shotPosX>900){
+            shotPosX=0-playerPosx;
+        }
+        if(playerPosy+shotPosY>600){
+            shotPosY=0-playerPosy;
+        }
+        if(playerPosx+shotPosX<0){
+            shotPosX=gc.getWidth()-playerPosx;
+        }
+        if(playerPosy+shotPosY<0){
+            shotPosY=gc.getHeight()-playerPosy;
         }
     }
     
     @Override
     public void render(GameContainer gc, Graphics g) throws SlickException{
-        shot.draw(shiftShotX,shiftShotY,1);
-        g.drawString(""+shiftShotX+" "+shiftShotY, shiftShotX, shiftShotY);
+        g.setColor(Color.white);
+        g.fillOval(shiftShotX, shiftShotY, 5, 5);
     }
     
+    public float getTime(){
+        return time;
+    }
 }
