@@ -13,7 +13,8 @@ public class Play extends BasicGameState{
     // variaveis do estado play
     public Player player1; // jogador
     public Shot tiro; // um unico tiro
-    ArrayList<Shot> shot = new ArrayList<Shot>(); //lista de tiros
+    public ArrayList<Shot> shot = new ArrayList<Shot>(); //lista de tiros
+    public double ticker = System.currentTimeMillis(); // tempo para o botão de atirar
     
     public Play(int state){
         
@@ -50,7 +51,10 @@ public class Play extends BasicGameState{
         }
         
         if(gc.getInput().isKeyDown(Input.KEY_SPACE)){
-            shot.add(new Shot(1,gc, player1.getPlayerPosX(), player1.getPlayerPosY(), player1.getAngle()));
+            if((System.currentTimeMillis()-ticker)>600){//verifica o tempo da ultima vez que atirou foi a mais de 600 milisegundos
+                shot.add(new Shot(1,gc, player1.getPlayerPosX(), player1.getPlayerPosY(), player1.getAngle()));
+                ticker = System.currentTimeMillis(); // "zera" a contagem do tempo de tiro
+            }
         }
     }
     
