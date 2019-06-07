@@ -16,7 +16,7 @@ public class Shot extends Player{
     private float angle;
     private float playerPosx;
     private float playerPosy;
-    private float time=20;
+    private float time=20; // vida de duração do tiro
 
     public Shot(int state, GameContainer gc, float posx, float posy, float angle) {
         super(state);
