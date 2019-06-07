@@ -17,7 +17,7 @@ public class Menu extends BasicGameState{
         
     }
     
-    public String Pos="";
+    public String Pos=""; //apagar no final
     
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException{
@@ -26,16 +26,16 @@ public class Menu extends BasicGameState{
     
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{ // classe onde faz os desenhos na tela menu
-        g.setColor(corStart);
-        g.drawString("Start", 400, 300);
-        g.drawRect(380, 280, 100, 60);
+        g.setColor(corStart); //selecionando cor
+        g.drawString("Start", 400, 300); //desenhando uma string
+        g.drawRect(380, 280, 100, 60);//desenhando um retangulo
         
-        g.setColor(corExit);
-        g.drawString("Sair", 400, 400);
-        g.drawRect(380, 380, 100, 60);
+        g.setColor(corExit); // selecionando cor
+        g.drawString("Sair", 400, 400); //desenhando uma string
+        g.drawRect(380, 380, 100, 60); //desenhando um retangulo
         
-        Image logo = new Image("Art/logo-asteroids.png");
-        logo.draw(150, 0, 0.3f);
+        Image logo = new Image("Art/logo-asteroids.png"); //selecionando a logo do jogo
+        logo.draw(150, 0, 0.3f); // desenhando a logo
     }
     
     @Override
@@ -45,13 +45,13 @@ public class Menu extends BasicGameState{
         int ypos = Mouse.getY(); //define pos y do ponteiro
         Pos="x: "+xpos+"y: "+ypos;
         if((xpos>380 && xpos<480) && (ypos>255 && ypos<320)){ //verifica se o ponteiro esta sobre o retangulo start
-            corStart = Color.green;
+            corStart = Color.green; //hover do retangulo start
             if(mouse.isMouseButtonDown(0)){ //evento apertar botao do mouse
                 sbg.enterState(1); //altera o estado para trocar a "cena" do jogo
             }
         }
         else if((xpos>380 && xpos<480) && (ypos>160 && ypos<220)){ //verifica se o ponteiro esta sobre o retangulo sair
-            corExit = Color.red;
+            corExit = Color.red; // hover do retangulo sair
             if(mouse.isMouseButtonDown(0)){
                 System.exit(0); //fecha o programa
             }
@@ -60,6 +60,7 @@ public class Menu extends BasicGameState{
             corStart = Color.yellow;
             corExit = Color.orange;
         }
+        
     }
     
     @Override
