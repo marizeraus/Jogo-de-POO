@@ -1,5 +1,7 @@
 package asteroids;
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 /**
@@ -8,9 +10,9 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class Shot extends Player{
     
-    private Image shot = null;
-    private float shotPosX = 0;
-    private float shotPosY = 0;
+    public Shape shot = null;
+    public float shotPosX = 0;
+    public float shotPosY = 0;
     private float shiftShotX;
     private float shiftShotY;
     private float angle;
@@ -23,6 +25,7 @@ public class Shot extends Player{
         this.angle = angle;
         this.playerPosx=posx;
         this.playerPosy=posy;
+        shot = new Circle(shiftShotX, shiftShotY, 2);
     }
     
     @Override
@@ -49,15 +52,22 @@ public class Shot extends Player{
         if(playerPosy+shotPosY<0){
             shotPosY=gc.getHeight()-playerPosy;
         }
+        shot.setLocation(shiftShotX, shiftShotY);
     }
     
     @Override
     public void render(GameContainer gc, Graphics g) throws SlickException{
         g.setColor(Color.white);
-        g.fillOval(shiftShotX, shiftShotY, 5, 5);
+        //g.fillOval(shiftShotX, shiftShotY, 5, 5);
+        g.draw(shot);
     }
     
     public float getTime(){
         return time;
     }
+    
+        /*float[] area = mob.getArea();
+        if(((shotPosX>area[0])&&(shotPosY>area[1]))&&((shotPosX<area[2])&&(shotPosY<area[3]))){
+            colisao = true;
+        }*/
 }

@@ -3,6 +3,10 @@ package asteroids;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.geom.Transform;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 /**
@@ -10,6 +14,8 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author jmsgfhr
  */
 public class Player extends Play{
+    
+    public Shape playerShape;
     private Image player = null;
     private float playerPosX = 0;
     private float playerPosY = 0;
@@ -27,19 +33,24 @@ public class Player extends Play{
     public void init(GameContainer gc) throws SlickException{
         speed = .1f;
         player = new Image("Art/player.png");
-        shiftX = playerPosX+((gc.getWidth()/2)-(player.getWidth()/2));
-        shiftY = playerPosY+((gc.getHeight()/2)-(player.getHeight()/2));
+        playerShape = new Rectangle(shiftX, shiftY, player.getWidth(), player.getHeight());
     }
     
     public void update(GameContainer gc, int delta) throws SlickException {
         Iterator<Shot> i = shot.iterator(); // itera o tiro
         while(i.hasNext()){ // verifica se tem proximo
             Shot s = i.next(); // variavel auxiliar do tipo shot
-            if(s.getTime()>0) // verifica se o tiro ainda tem tempo de vida
+            if((s.getTime()>0)) // verifica se o tiro ainda tem tempo de vida
                 s.update(gc, delta); // atualiza o tiro
             else
                 i.remove(); // se o tiro nao tiver mais vida é removido
+            //System.out.println(mob.getMinX());
+            
         }
+        shiftX = playerPosX+((gc.getWidth()/2)-(player.getWidth()/2));
+        shiftY = playerPosY+((gc.getHeight()/2)-(player.getHeight()/2));
+        playerShape.setLocation(shiftX, shiftY);
+        
     }
     
     public void render(GameContainer gc, Graphics g) throws SlickException {
@@ -58,6 +69,7 @@ public class Player extends Play{
         player.setRotation(angle);
         player.draw(shiftX, shiftY, 1);
         g.drawString(""+playerPosX+" "+playerPosY, shiftX, shiftY);
+        g.draw(playerShape);
         
         //render do tiro do player
         for(Shot s: shot){
@@ -88,6 +100,7 @@ public class Player extends Play{
     private void moveUp(int delta){
         playerPosX -= (float) Math.cos(Math.toRadians(angle+90))*delta*speed;
         playerPosY -= (float) Math.sin(Math.toRadians(angle+90))*delta*speed;
+        System.out.println(Math.cos(Math.toRadians(angle+90)));
     }
     
     private void rotateLeft(int delta){
@@ -113,5 +126,9 @@ public class Player extends Play{
     
     public float getAngle(){
         return angle;
+    }
+    
+    public ArrayList<Shot> getShot(){
+        return shot;
     }
 }
