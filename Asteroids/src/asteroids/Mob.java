@@ -1,5 +1,6 @@
 package asteroids;
 
+import static java.lang.Math.abs;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -17,42 +18,45 @@ public class Mob {
     private float mobPosY = 0;
     private float shiftMobX;
     private float shiftMobY;
+    private float velx = 0;
+    private float vely = 0;
     public Shape mobShape;
+    private int child;
     
-    public Mob(boolean child) throws SlickException{
+    public Mob(GameContainer gc) throws SlickException{
         mobShape = new Circle(shiftMobX, shiftMobY, 30);
         this.mob = new Image("Art/asteroid.png");
         int pos = (int) (4 * Math.random());
         switch (pos) {
             case 0:
-                mobPosX = -30;
+                mobPosX = -mob.getWidth();
                 mobPosY = (float) (600 * Math.random());
                 break;
             case 1:
-                mobPosX = 930;
+                mobPosX = gc.getWidth() + mob.getWidth();
                 mobPosY = (float) (600 * Math.random());
                 break;
             case 2:
                 mobPosX = (float) (900 * Math.random());
-                mobPosY = -30;
+                mobPosY = -mob.getHeight();
                 break;
             case 3:
                 mobPosX = (float) (900 * Math.random());
-                mobPosY = 630;
+                mobPosY = gc.getHeight() + mob.getHeight();
                 break;
             default:
                 break;
         }
-        shiftMobX = mobPosX;
-        shiftMobY = mobPosY;
+        shiftMobX = mobPosX + mob.getWidth()/2;
+        shiftMobY = mobPosY + mob.getHeight()/2;
     }
     
     public void init(GameContainer gc){
     }
     
     public void update(GameContainer gc, int delta) throws SlickException {
-        //shiftMobX += velx;
-        //shiftMobY += vely;
+        shiftMobX += velx;
+        shiftMobY += vely;
         
         if(shiftMobX>gc.getWidth()){
             shiftMobX=gc.getWidth()*(-1);
@@ -77,4 +81,14 @@ public class Mob {
     public Shape getShape(){
         return mobShape;
     }
+    
+    public void direcao(float playerx, float playery){
+        //float h = (float) sqrt(( pow(playerx, 2)) + pow(playery, 2));
+        if(playerx>shiftMobX ) velx = (float) (abs(playerx - shiftMobX))/(60*5);    
+        else if(playerx<shiftMobX ) velx = (float) -(abs(playerx - shiftMobX)/(60*5));
+        if(playery>shiftMobY) vely = (float) (abs(playery - shiftMobY))/(60*5);
+        else if(playery<shiftMobY) vely = (float) -((abs(playery - shiftMobY))/(60*5));
+        //System.out.println("" + shiftMobX +" " + shiftMobY +" "+ playerx +" " + playery + " " + velx + " " + vely);
+    }
+    
 }

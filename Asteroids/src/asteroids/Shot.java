@@ -18,7 +18,7 @@ public class Shot extends Player{
     private float angle;
     private float playerPosx;
     private float playerPosy;
-    private float time=20; // vida de duração do tiro
+    private float time = 150; // vida de duração do tiro
 
     public Shot(int state, GameContainer gc, float posx, float posy, float angle) {
         super(state);
@@ -39,7 +39,7 @@ public class Shot extends Player{
         shiftShotY = shotPosY+playerPosy;
         shotPosX -= (float) Math.cos(Math.toRadians(angle+90))*delta*.5f;
         shotPosY -= (float) Math.sin(Math.toRadians(angle+90))*delta*.5f;
-        time-= 0.2;
+        time-= 3;
         if(playerPosx+shotPosX>900){
             shotPosX=0-playerPosx;
         }
