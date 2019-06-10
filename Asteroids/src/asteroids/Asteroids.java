@@ -1,4 +1,3 @@
-
 package asteroids;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
@@ -31,6 +30,7 @@ public class Asteroids extends StateBasedGame{
         try {
             appgc = new AppGameContainer(new Asteroids(gamename)); // instanciando o container que é a tela do jogo
             appgc.setDisplayMode(900, 600, false); // setando tamanho
+            appgc.setTargetFrameRate(60);
             appgc.start(); // iniciando tela
         } catch (SlickException e){
             e.printStackTrace();
