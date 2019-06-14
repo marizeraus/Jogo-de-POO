@@ -131,4 +131,9 @@ public class Player extends Play{
     public ArrayList<Shot> getShot(){
         return shot;
     }
+    
+    public void reset(){
+        playerPosX = 0;
+        playerPosY = 0;
+    }
 }
